@@ -8,7 +8,7 @@
       </template>
     <el-form status-icon label-width="120px" class="demo-ruleForm">
       <template v-for="(item,index)  in addList" :key="index">
-        <el-form-item :label="item.column_name">
+        <el-form-item :label="item.column_name" v-if="item.column_name != 'id'">
           <el-input v-model="item.column_comment"></el-input>
         </el-form-item>
       </template>
@@ -62,7 +62,19 @@ export default {
       })
     },
     submitForm () {
-      console.log(this.addList)
+      var sqlBody = []
+      for (var i in this.addList) {
+        if (this.addList[i].column_name !== 'id') {
+          console.log(this.addList[i].column_comment)
+          sqlBody.push(this.addList[i].column_comment)
+        }
+      }
+      axios.get('/api/addTable', {
+        params: {
+          tableName: this.tableName,
+          addList: sqlBody
+        }
+      }).then(res => {})
     },
     resetForm () {
       this.addList = this.nonList

@@ -116,5 +116,17 @@ module.exports = {
         }
         connection.release();
    })
+  },
+  addTable(req, res, next) {
+    pool.getConnection((err,connection) => {
+        let tableName = req.query.tableName;
+        let addList = req.query.addList;
+        var sqlBody = addList.join('\',\'');
+        var sql = "INSERT INTO " + " " + tableName + " " + " VALUES (" + "null,\'" + sqlBody + "\')"
+        connection.query(sql, (err,result) => {
+          res.json(result);
+        })
+        connection.release();
+   })
   }
 }

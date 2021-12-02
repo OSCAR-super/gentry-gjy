@@ -20,5 +20,8 @@ router.get('/showTable', (req, res, next) => {
 router.get('/deleteTable', (req, res, next) => {
   api.deleteTable(req, res, next);
 });
+router.get('/addTable', (req, res, next) => {
+  api.addTable(req, res, next);
+});
 
 module.exports = router;

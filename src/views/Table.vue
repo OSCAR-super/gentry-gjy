@@ -6,15 +6,15 @@
       <template #reference>
         <el-button style="margin:10px" class="t" type="success">增加</el-button>
       </template>
-    <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" label-width="120px" class="demo-ruleForm">
-      <template v-for="(item,index)  in tableHead" :key="index">
+    <el-form status-icon label-width="120px" class="demo-ruleForm">
+      <template v-for="(item,index)  in addList" :key="index">
         <el-form-item :label="item.column_name">
           <el-input v-model="item.column_comment"></el-input>
         </el-form-item>
       </template>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">Submit</el-button >
-        <el-button @click="resetForm('ruleForm')">Reset</el-button>
+        <el-button type="primary" @click="submitForm()">Submit</el-button >
+        <el-button @click="resetForm()">Reset</el-button>
       </el-form-item>
     </el-form>
     </el-popover>
@@ -42,7 +42,8 @@ export default {
       tableName: '',
       outputs: [],
       multipleSelection: [],
-      addList: []
+      addList: [],
+      nonList: []
     }
   },
   methods: {
@@ -55,10 +56,16 @@ export default {
       }).then(res => {
         this.tableNameList = res.data
         this.tableHead = []
+        this.addList = []
+        this.nonList = []
         this.getIndexTable()
       })
     },
-    addTable () {
+    submitForm () {
+      console.log(this.addList)
+    },
+    resetForm () {
+      this.addList = this.nonList
     },
     handleSelectionChange (val) {
       if (val.length > 0) {
@@ -84,6 +91,16 @@ export default {
           that.tableHead.push(
             {
               column_name: headersey[j], column_comment: headersey[j]
+            }
+          )
+          that.addList.push(
+            {
+              column_name: headersey[j], column_comment: ''
+            }
+          )
+          that.nonList.push(
+            {
+              column_name: headersey[j], column_comment: ''
             }
           )
         }

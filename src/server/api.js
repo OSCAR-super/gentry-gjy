@@ -109,7 +109,7 @@ module.exports = {
         let tableName = req.query.tableName;
         let multipleSelection = req.query.multipleSelection;
         for (var i = 0 in multipleSelection){
-          var sql = "DELETE FROM" + " " + tableName + " " + "WHERE id =" + multipleSelection[i] 
+          var sql = "DELETE FROM" + " " + tableName + " " + "WHERE id =" + multipleSelection[i]
           connection.query(sql, (err,result) => {
             res.json(result);
         })

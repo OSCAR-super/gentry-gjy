@@ -8,9 +8,9 @@
     </el-upload>
     <el-input style="width:400px;margin-top:5px;" @change="input()" v-model="tableName" clearable placeholder="这里是可以清空的,表格名称格式为tb_XXX"></el-input>
     <el-button size="small" style="margin:10px" type="success" :disabled="disable" class="upload-bom" @click="createTable">保存</el-button>
-    <el-button size="small" type="warning" style="margin:10px" class="upload-bom" @click="goHistry">历史</el-button>
+    <el-button size="small" :disabled="loading" type="warning" style="margin:10px" class="upload-bom" @click="goHistry">历史</el-button>
   </div>
-  <el-table  :data="outputs" style="margin-top: 20px" >
+  <el-table v-loading="loading" element-loading-text="加载中..." :element-loading-spinner="svg" element-loading-svg-view-box="-10, -10, 50, 50" element-loading-background="rgba(0, 0, 0, 0.8)" :data="outputs" style="margin-top: 20px" >
     <template v-for="(item,index) in tableHead">
     <el-table-column :prop="item.column_name" :label="item.column_comment" :key="index" v-if="item.column_name != 'id'"></el-table-column>
   </template>
@@ -36,7 +36,8 @@ export default {
       excelHand: [],
       fileData: '',
       tableName: '',
-      disable: true
+      disable: true,
+      loading: false
     }
   },
   methods: {
@@ -51,6 +52,7 @@ export default {
       this.readExcel()
     },
     readExcel (e) {
+      this.loading = true
       this.tableHead = []
       this.outputs = []
       this.excelHand = []
@@ -100,8 +102,10 @@ export default {
         }
       }
       fileReader.readAsBinaryString(files.raw)
+      this.loading = false
     },
     createTable () {
+      this.loading = true
       const that = this
       var hand = []
       hand.push('id int primary key not null auto_increment')
@@ -126,14 +130,14 @@ export default {
           sqlSingal = []
         }
         // var sqlDetail = sqlAll.join(',')
-        for (var perSql in sqlAll) {
-          axios.post('http://127.0.0.1:3000' + '/api/insertTable', {
-            params: {
-              tableName: that.tableName,
-              sqlBody: '\'' + sqlAll[perSql] + '\''
-            }
-          }).then(res => {})
-        }
+        axios.post('http://127.0.0.1:3000' + '/api/insertTable', {
+          params: {
+            tableName: that.tableName,
+            sqlBody: sqlAll
+          }
+        }).then(res => {
+          this.loading = false
+        })
       })
     },
     goHistry () {

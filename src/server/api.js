@@ -56,26 +56,17 @@ module.exports = {
     })
   },
   insertTable(req, res, next) {
-    let sqlBody = req.body.params.sqlBody;
+    let sqlBodys = req.body.params.sqlBody;
     let tableName = req.body.params.tableName;
-    pool.getConnection((err,connection) => {
+      pool.getConnection((err,connection) => {
+        for (var sqlBody in sqlBodys) {
         //var sql = sqlMap.creatTable;
-        var sql = "INSERT INTO " + " " + tableName + " " + " VALUES (" + "null," + sqlBody + ")"
-        connection.query(sql, (err,result) => {
-          connection.release();
-          res.json(result);
-            // // res.json(result);    // 向前端返回json格式的数据
-            // connection.release();
-            // let state = {}
-            // if(result.length > 0) {
-            //   state.state = 1;
-            //   res.json(state);
-            // } else {
-            //   state.state = 0;
-            //   res.json(state);
-            // }
-        })
-    })
+        var sql = "INSERT INTO " + " " + tableName + " " + " VALUES (" + "null,\'" + sqlBodys[sqlBody] + "\')"
+        connection.query(sql, (err,result) => {})
+        }
+        connection.release();
+        res.json("finish");
+      })
   },
   historyTable(req, res, next) {
     pool.getConnection((err,connection) => {
@@ -110,11 +101,10 @@ module.exports = {
         let multipleSelection = req.query.multipleSelection;
         for (var i = 0 in multipleSelection){
           var sql = "DELETE FROM" + " " + tableName + " " + "WHERE id =" + multipleSelection[i]
-          connection.query(sql, (err,result) => {
-            res.json(result);
-        })
+          connection.query(sql, (err,result) => {})
         }
         connection.release();
+        res.json("finish");
    })
   },
   addTable(req, res, next) {

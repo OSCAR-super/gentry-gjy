@@ -1,7 +1,7 @@
 <template>
    <el-page-header content="数据库" @click="goBack" />
    <div class="flex">
-   <el-button style="margin:10px" class="t" type="danger" @click="deleteTable">删除</el-button>
+   <el-button style="margin:10px" :disabled="disable" class="t" type="danger" @click="deleteTable">删除</el-button>
    <el-popover placement="right" :width="500" trigger="click">
       <template #reference>
         <el-button style="margin:10px" class="t" type="success">增加</el-button>
@@ -20,7 +20,7 @@
     </el-popover>
    <el-popover placement="right" :width="500" trigger="click">
       <template #reference>
-        <el-button style="margin:10px" class="t" type="warning">修改</el-button>
+        <el-button :disabled="disable" style="margin:10px" class="t" type="warning">修改</el-button>
       </template>
     <el-form status-icon label-width="120px" class="demo-ruleForm">
       <template v-for="(item,index)  in changeList" :key="index">
@@ -35,7 +35,7 @@
     </el-form>
     </el-popover>
   </div>
-   <el-table @selection-change="handleSelectionChange"  :data="outputs" style="margin-top: 20px" >
+   <el-table v-loading="loading" element-loading-text="加载中..." :element-loading-spinner="svg" element-loading-svg-view-box="-10, -10, 50, 50" element-loading-background="rgba(0, 0, 0, 0.8)"  @selection-change="handleSelectionChange"  :data="outputs" style="margin-top: 20px" >
     <template v-for="(item,index) in tableHead">
       <el-table-column type="selection" width="55" :prop="item.column_name" :label="item.column_comment" :key="index" v-if="item.column_name == 'id'"></el-table-column>
       <el-table-column :prop="item.column_name" :label="item.column_comment" :key="index" v-if="item.column_name != 'id'"></el-table-column>
@@ -60,7 +60,9 @@ export default {
       multipleSelection: [],
       addList: [],
       nonList: [],
-      changeList: []
+      changeList: [],
+      loading: false,
+      disable: true
     }
   },
   methods: {
@@ -147,8 +149,12 @@ export default {
           )
         }
       }
+      if (val.length !== 0) {
+        this.disable = false
+      }
     },
     getIndexTable () {
+      this.loading = true
       const that = this
       this.tableName = that.proxy.$route.params.tbName
       axios.get('http://127.0.0.1:3000' + '/api/showTable', {
@@ -186,6 +192,7 @@ export default {
           that.outputs.push(sheetData)
         }
       })
+      this.loading = false
     },
     goBack () {
       const that = this

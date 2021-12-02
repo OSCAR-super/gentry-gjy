@@ -50,10 +50,10 @@ export default {
       this.fileData = file
       this.readExcel()
     },
-    changeTable () {
-      console.log(1)
-    },
     readExcel (e) {
+      this.tableHead = []
+      this.outputs = []
+      this.excelHand = []
       const that = this
       const files = that.fileData
       // console.log(files)
@@ -71,11 +71,12 @@ export default {
           const workbook = XLSX.read(data, {
             type: 'binary'
           })
-          const wsname = workbook.SheetNames[1]
+          const wsname = workbook.SheetNames[0]
           const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname])
           that.outputs = []
           var headersey = []
-          for (var key in ws[1]) {
+          console.log(ws)
+          for (var key in ws[0]) {
             headersey.push(key)
           }
           that.excelHand = headersey

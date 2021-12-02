@@ -84,7 +84,7 @@ module.exports = {
           connection.release();
           var tableNameList = [];
           for (var tableName in result) {
-            tableNameList.push(result[tableName].Tables_in_gentry);
+            tableNameList.push(result[tableName].Tables_in_mysql);
           }
           res.json(tableNameList);
       })

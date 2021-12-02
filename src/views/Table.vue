@@ -13,8 +13,8 @@
         </el-form-item>
       </template>
       <el-form-item>
-        <el-button type="primary" @click="submitForm()">Submit</el-button >
-        <el-button @click="resetForm()">Reset</el-button>
+        <el-button type="primary" @click="submitForm()">提交</el-button >
+        <el-button @click="resetForm()">重置</el-button>
       </el-form-item>
     </el-form>
     </el-popover>
@@ -29,8 +29,8 @@
         </el-form-item>
       </template>
       <el-form-item>
-        <el-button type="primary" @click="submitChangeForm()">Submit</el-button >
-        <el-button @click="resetChangeForm()">Reset</el-button>
+        <el-button type="primary" @click="submitChangeForm()">提交</el-button >
+        <el-button @click="resetChangeForm()">重置</el-button>
       </el-form-item>
     </el-form>
     </el-popover>

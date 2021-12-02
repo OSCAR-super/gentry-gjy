@@ -14,16 +14,6 @@
   },
   "main": "background.js",
   "dependencies": {
-    "axios": "^0.23.0",
-    "core-js": "^3.6.5",
-    "element-plus": "^1.1.0-beta.24",
-    "js-cookie": "^3.0.1",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0",
-    "xlsx": "^0.17.3"
-  },
-  "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
@@ -47,6 +37,14 @@
     "sass-loader": "^8.0.2",
     "vue-cli-plugin-electron-builder": "~2.1.1",
     "vue-cli-plugin-element": "~1.0.1",
+    "axios": "^0.23.0",
+    "core-js": "^3.6.5",
+    "element-plus": "^1.1.0-beta.24",
+    "js-cookie": "^3.0.1",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0",
+    "xlsx": "^0.17.3",
     "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "eslintConfig": {

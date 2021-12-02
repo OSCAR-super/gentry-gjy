@@ -128,5 +128,20 @@ module.exports = {
         })
         connection.release();
    })
+  },
+  changeTable(req, res, next) {
+    pool.getConnection((err,connection) => {
+        let tableName = req.query.tableName;
+        let addList = req.query.changeList;
+        let id = req.query.id;
+        var sqlBody = addList.join('\',\'');
+        var sqldelete = "DELETE FROM" + " " + tableName + " " + "WHERE id =" + id
+        connection.query(sqldelete, (err,result) => {})
+        var sql = "INSERT INTO " + " " + tableName + " " + " VALUES (" + "\'" + sqlBody + "\')"
+        connection.query(sql, (err,result) => {
+          res.json(result);
+        })
+        connection.release();
+   })
   }
 }

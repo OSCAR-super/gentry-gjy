@@ -18,6 +18,22 @@
       </el-form-item>
     </el-form>
     </el-popover>
+   <el-popover placement="right" :width="500" trigger="click">
+      <template #reference>
+        <el-button style="margin:10px" class="t" type="warning">修改</el-button>
+      </template>
+    <el-form status-icon label-width="120px" class="demo-ruleForm">
+      <template v-for="(item,index)  in changeList" :key="index">
+        <el-form-item :label="item.column_name" v-if="item.column_name != 'id'">
+          <el-input v-model="item.column_comment"></el-input>
+        </el-form-item>
+      </template>
+      <el-form-item>
+        <el-button type="primary" @click="submitChangeForm()">Submit</el-button >
+        <el-button @click="resetChangeForm()">Reset</el-button>
+      </el-form-item>
+    </el-form>
+    </el-popover>
   </div>
    <el-table @selection-change="handleSelectionChange"  :data="outputs" style="margin-top: 20px" >
     <template v-for="(item,index) in tableHead">
@@ -43,12 +59,13 @@ export default {
       outputs: [],
       multipleSelection: [],
       addList: [],
-      nonList: []
+      nonList: [],
+      changeList: []
     }
   },
   methods: {
     deleteTable () {
-      axios.get('/api/deleteTable', {
+      axios.get('http://127.0.0.1:3000' + '/api/deleteTable', {
         params: {
           tableName: this.tableName,
           multipleSelection: this.multipleSelection
@@ -69,27 +86,72 @@ export default {
           sqlBody.push(this.addList[i].column_comment)
         }
       }
-      axios.get('/api/addTable', {
+      axios.get('http://127.0.0.1:3000' + '/api/addTable', {
         params: {
           tableName: this.tableName,
           addList: sqlBody
         }
-      }).then(res => {})
+      }).then(res => {
+        this.tableHead = []
+        this.addList = []
+        this.nonList = []
+        this.getIndexTable()
+      })
+    },
+    submitChangeForm () {
+      var sqlBody = []
+      var id
+      for (var i in this.changeList) {
+        if (this.changeList[i].column_name === 'id') {
+          id = this.changeList[i].column_comment
+        }
+        sqlBody.push(this.changeList[i].column_comment)
+      }
+      axios.get('http://127.0.0.1:3000' + '/api/changeTable', {
+        params: {
+          tableName: this.tableName,
+          changeList: sqlBody,
+          id: id
+        }
+      }).then(res => {
+        this.tableHead = []
+        this.addList = []
+        this.nonList = []
+        this.getIndexTable()
+      })
     },
     resetForm () {
-      this.addList = this.nonList
+      this.addList = []
+    },
+    resetChangeForm () {
+      this.changeList = this.nonList
     },
     handleSelectionChange (val) {
+      var that = this
       if (val.length > 0) {
         for (var i in val) {
           this.multipleSelection.push(val[i].id)
+        }
+        that.changeList = []
+        that.nonList = []
+        for (var key in val[val.length - 1]) {
+          that.changeList.push(
+            {
+              column_name: key, column_comment: val[val.length - 1][key]
+            }
+          )
+          that.nonList.push(
+            {
+              column_name: key, column_comment: val[val.length - 1][key]
+            }
+          )
         }
       }
     },
     getIndexTable () {
       const that = this
       this.tableName = that.proxy.$route.params.tbName
-      axios.get('/api/showTable', {
+      axios.get('http://127.0.0.1:3000' + '/api/showTable', {
         params: {
           tableName: this.tableName
         }

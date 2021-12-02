@@ -109,7 +109,7 @@ export default {
       }
       var sqlBodys = hand.join(', ')
       console.log(sqlBodys)
-      axios.get('/api/createTable', {
+      axios.get('http://127.0.0.1:3000' + '/api/createTable', {
         params: {
           sqlBody: sqlBodys,
           tableName: that.tableName
@@ -126,7 +126,7 @@ export default {
         }
         // var sqlDetail = sqlAll.join(',')
         for (var perSql in sqlAll) {
-          axios.post('/api/insertTable', {
+          axios.post('http://127.0.0.1:3000' + '/api/insertTable', {
             params: {
               tableName: that.tableName,
               sqlBody: '\'' + sqlAll[perSql] + '\''

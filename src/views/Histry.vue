@@ -32,7 +32,7 @@ export default {
       that.proxy.$router.go(-1)
     },
     getTable () {
-      axios.get('/api/historyTable', {
+      axios.get('http://127.0.0.1:3000' + '/api/historyTable', {
         params: {}
       }).then(res => {
         this.tableNameList = res.data

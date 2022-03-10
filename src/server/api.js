@@ -75,7 +75,7 @@ module.exports = {
           connection.release();
           var tableNameList = [];
           for (var tableName in result) {
-            tableNameList.push(result[tableName].Tables_in_mysql);
+            tableNameList.push(result[tableName].Tables_in_gentry);
           }
           res.json(tableNameList);
       })
@@ -128,6 +128,43 @@ module.exports = {
         var sqldelete = "DELETE FROM" + " " + tableName + " " + "WHERE id =" + id
         connection.query(sqldelete, (err,result) => {})
         var sql = "INSERT INTO " + " " + tableName + " " + " VALUES (" + "\'" + sqlBody + "\')"
+        connection.query(sql, (err,result) => {
+          res.json(result);
+        })
+        connection.release();
+   })
+  },
+  addMaster(req, res, next) {
+    pool.getConnection((err,connection) => {
+        let id = req.query.id;
+        let name = req.query.name;
+        let id_number = req.query.id_number;
+        let work_unit = req.query.work_unit;
+        let resume_state = req.query.resume_state;
+        let start_time = req.query.start_time;
+        let end_time = req.query.end_time;
+        let subsidy_state = req.query.subsidy_state;
+        let remark = req.query.remark;
+        var sqlBody = '\'' + id + '\',\'' + name + '\',\'' + id_number + '\',\'' + work_unit + '\',' + resume_state + ',\'' + start_time + '\',\'' + end_time + '\',' + subsidy_state + ',\'' +remark + '\',';
+        var sql = "INSERT INTO " + " " + "tb_master" + " " + " VALUES (" + sqlBody + "null)"
+        console.log(sql)
+        connection.query(sql, (err,result) => {
+          res.json(result);
+        })
+        connection.release();
+   })
+  },
+  searchUser(req, res, next) {
+    pool.getConnection((err,connection) => {
+        let id = req.query.id;
+        let name = req.query.name;
+        let time = req.query.time;
+        if ( id == '') {
+          var sql = "SELECT * FROM tb_master WHERE name = " + name;
+        }
+        if( name == '') {
+          var sql = "SELECT * FROM tb_master WHERE id = " + id;
+        }
         connection.query(sql, (err,result) => {
           res.json(result);
         })

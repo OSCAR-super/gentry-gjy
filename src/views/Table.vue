@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     deleteTable () {
-      axios.get('http://127.0.0.1:3000' + '/api/deleteTable', {
+      axios.get('/api/deleteTable', {
         params: {
           tableName: this.tableName,
           multipleSelection: this.multipleSelection
@@ -88,7 +88,7 @@ export default {
           sqlBody.push(this.addList[i].column_comment)
         }
       }
-      axios.get('http://127.0.0.1:3000' + '/api/addTable', {
+      axios.get('/api/addTable', {
         params: {
           tableName: this.tableName,
           addList: sqlBody
@@ -109,7 +109,7 @@ export default {
         }
         sqlBody.push(this.changeList[i].column_comment)
       }
-      axios.get('http://127.0.0.1:3000' + '/api/changeTable', {
+      axios.get('/api/changeTable', {
         params: {
           tableName: this.tableName,
           changeList: sqlBody,
@@ -157,7 +157,7 @@ export default {
       this.loading = true
       const that = this
       this.tableName = that.proxy.$route.params.tbName
-      axios.get('http://127.0.0.1:3000' + '/api/showTable', {
+      axios.get('/api/showTable', {
         params: {
           tableName: this.tableName
         }

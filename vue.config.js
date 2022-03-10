@@ -16,7 +16,7 @@ module.exports = {
   pages: {
     main: {
       // page 的入口
-      entry: 'src/modules/master/master.js',
+      entry: 'src/modules/index/index.js',
       // 模板来源
       template: 'public/main.html',
       // 在 dist/index.html 的输出

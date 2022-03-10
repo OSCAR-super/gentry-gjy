@@ -26,5 +26,11 @@ router.get('/addTable', (req, res, next) => {
 router.get('/changeTable', (req, res, next) => {
   api.changeTable(req, res, next);
 });
+router.get('/addMaster', (req, res, next) => {
+  api.addMaster(req, res, next);
+});
+router.get('/searchUser', (req, res, next) => {
+  api.searchUser(req, res, next);
+});
 
 module.exports = router;

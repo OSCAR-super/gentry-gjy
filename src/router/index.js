@@ -1,32 +1,42 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import File from '../views/File.vue'
+import Pick from '../views/Pick.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'File',
-    component: File
+    name: 'Pick',
+    component: Pick
   },
   {
-    path: '/histry',
-    name: 'histry',
-    component: () => import(/* webpackChunkName: "histry" */ '../views/Histry.vue')
+    path: '/search',
+    name: 'search',
+    component: () => import(/* webpackChunkName: "search" */ '../views/Search.vue')
   },
   {
-    path: '/table',
-    name: 'table',
-    component: () => import(/* webpackChunkName: "table" */ '../views/Table.vue')
-  },
-  {
-    path: '/finished',
-    name: 'Finished',
-    component: () => import(/* webpackChunkName: "finished" */ '../views/Finished.vue')
-  },
-  {
-    path: '/add',
-    name: 'Add',
-    component: () => import(/* webpackChunkName: "add" */ '../views/Add.vue')
+    path: '/insect',
+    name: 'insect',
+    component: () => import(/* webpackChunkName: "insect" */ '../views/Insect.vue')
   }
+  // {
+  //   path: '/histry',
+  //   name: 'histry',
+  //   component: () => import(/* webpackChunkName: "histry" */ '../views/Histry.vue')
+  // },
+  // {
+  //   path: '/table',
+  //   name: 'table',
+  //   component: () => import(/* webpackChunkName: "table" */ '../views/Table.vue')
+  // },
+  // {
+  //   path: '/finished',
+  //   name: 'Finished',
+  //   component: () => import(/* webpackChunkName: "finished" */ '../views/Finished.vue')
+  // },
+  // {
+  //   path: '/add',
+  //   name: 'Add',
+  //   component: () => import(/* webpackChunkName: "add" */ '../views/Add.vue')
+  // }
 ]
 
 const router = createRouter({

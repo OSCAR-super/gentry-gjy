@@ -32,5 +32,8 @@ router.get('/addMaster', (req, res, next) => {
 router.get('/searchUser', (req, res, next) => {
   api.searchUser(req, res, next);
 });
+router.get('/searchAllUser', (req, res, next) => {
+  api.searchAllUser(req, res, next);
+});
 
 module.exports = router;

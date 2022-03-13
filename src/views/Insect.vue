@@ -206,6 +206,11 @@ export default {
           remark: that.form.remark
         }
       }).then(res => {
+        this.$message({
+          message: '恭喜你，添加成功！',
+          type: 'success'
+        })
+        this.onClean()
       })
     }
   }

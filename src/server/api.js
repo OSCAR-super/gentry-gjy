@@ -99,7 +99,7 @@ module.exports = {
     pool.getConnection((err,connection) => {
         let tableName = req.query.tableName;
         let multipleSelection = req.query.multipleSelection;
-        for (var i = 0 in multipleSelection){
+        for (var i in multipleSelection){
           var sql = "DELETE FROM" + " " + tableName + " " + "WHERE id =" + multipleSelection[i]
           connection.query(sql, (err,result) => {})
         }
@@ -147,7 +147,6 @@ module.exports = {
         let remark = req.query.remark;
         var sqlBody = '\'' + id + '\',\'' + name + '\',\'' + id_number + '\',\'' + work_unit + '\',' + resume_state + ',\'' + start_time + '\',\'' + end_time + '\',' + subsidy_state + ',\'' +remark + '\',';
         var sql = "INSERT INTO " + " " + "tb_master" + " " + " VALUES (" + sqlBody + "null)"
-        console.log(sql)
         connection.query(sql, (err,result) => {
           res.json(result);
         })
@@ -170,5 +169,14 @@ module.exports = {
         })
         connection.release();
    })
+  },
+  searchAllUser(req, res, next) {
+    pool.getConnection((err,connection) => {
+      var sql = "SELECT * FROM tb_master"
+      connection.query(sql, (err,result) => {
+        res.json(result);
+      })
+      connection.release();
+    })
   }
 }
